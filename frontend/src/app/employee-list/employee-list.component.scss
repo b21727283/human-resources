@@ -1,0 +1,13 @@
+ion-item {
+  --inner-padding-end: 0;
+}
+
+ion-label {
+  white-space: pre-wrap;
+}
+
+ion-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

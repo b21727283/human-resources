@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ employee ? 'Update Employee' : 'Add Employee' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onCancel()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+    <ion-text class="error-text" *ngIf="employeeForm.get('name')?.hasError('required') && employeeForm.get('name')?.touched">
+      Name is required.
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Surname</ion-label>
+      <ion-input formControlName="surname"></ion-input>
+    </ion-item>
+    <ion-text class="error-text" *ngIf="employeeForm.get('surname')?.hasError('required') && employeeForm.get('surname')?.touched">
+      Surname is required.
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Position</ion-label>
+      <ion-input formControlName="position"></ion-input>
+    </ion-item>
+    <ion-text class="error-text" *ngIf="employeeForm.get('position')?.hasError('required') && employeeForm.get('position')?.touched">
+      Position is required.
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Military Status</ion-label>
+      <ion-select formControlName="militaryStatus">
+        <ion-select-option value="COMPLETED">Completed</ion-select-option>
+        <ion-select-option value="EXEMPT">Exempt</ion-select-option>
+        <ion-select-option value="DEFERRED">Deferred</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text class="error-text" *ngIf="employeeForm.get('militaryStatus')?.hasError('required') && employeeForm.get('militaryStatus')?.touched">
+      Military status is required.
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Notice Period</ion-label>
+      <ion-input formControlName="noticePeriod"></ion-input>
+    </ion-item>
+    <ion-text class="error-text" *ngIf="employeeForm.get('noticePeriod')?.hasError('required') && employeeForm.get('noticePeriod')?.touched">
+      Notice period is required.
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Phone Number</ion-label>
+      <ion-input formControlName="phoneNumber" placeholder="+90-505-505-4000"></ion-input>
+    </ion-item>
+    <ion-text class="error-text" *ngIf="employeeForm.get('phoneNumber')?.hasError('required') && employeeForm.get('phoneNumber')?.touched">
+      Phone number is required.
+    </ion-text>
+    <ion-text class="error-text" *ngIf="employeeForm.get('phoneNumber')?.hasError('pattern') && employeeForm.get('phoneNumber')?.touched">
+      Phone number must be in the format +90-505-505-4000.
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input formControlName="email"></ion-input>
+    </ion-item>
+    <ion-text class="error-text" *ngIf="employeeForm.get('email')?.hasError('required') && employeeForm.get('email')?.touched">
+      Email is required.
+    </ion-text>
+    <ion-text class="error-text" *ngIf="employeeForm.get('email')?.hasError('email') && employeeForm.get('email')?.touched">
+      Enter a valid email.
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">CV</ion-label>
+      <input type="file" (change)="onFileChange($event)" id="fileInput" hidden/>
+      <div class="upload-file">
+        <ion-button expand="full" (click)="triggerFileInput()">Upload CV</ion-button>
+        <ion-text *ngIf="fileName">{{ fileName }}</ion-text>
+      </div>
+    </ion-item>
+    <ion-text class="error-text" *ngIf="employeeForm.get('cv')?.hasError('required') && employeeForm.get('cv')?.touched">
+      CV is required.
+    </ion-text>
+
+    <ion-button expand="full" type="submit" [disabled]="employeeForm.invalid">Submit</ion-button>
+  </form>
+</ion-content>

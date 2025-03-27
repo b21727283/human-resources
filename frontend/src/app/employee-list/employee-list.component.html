@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Employee Management</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openForm()">Add Employee</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-item>
+  <ion-label>Filter by</ion-label>
+  <ion-select [(ngModel)]="selectedField" (ionChange)="filterEmployees()">
+    <ion-select-option value="name">Name</ion-select-option>
+    <ion-select-option value="surname">Surname</ion-select-option>
+    <ion-select-option value="position">Position</ion-select-option>
+    <ion-select-option value="militaryStatus">Military Status</ion-select-option>
+    <ion-select-option value="noticePeriod">Notice Period</ion-select-option>
+    <ion-select-option value="phoneNumber">Phone Number</ion-select-option>
+    <ion-select-option value="email">Email</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<ion-searchbar [(ngModel)]="searchQuery" (ionInput)="filterEmployees()"
+               placeholder="Search employees"></ion-searchbar>
+
+<ion-list>
+  <ion-item lines="full" *ngFor="let employee of displayedEmployees">
+    <ion-label>
+      <h2>{{ employee.name }} {{ employee.surname }}</h2>
+      <p>Position: {{ employee.position }}</p>
+      <p>Military Status: {{ employee.militaryStatus }}</p>
+      <p>Notice Period: {{ employee.noticePeriod }}</p>
+      <p>Phone Number: {{ employee.phoneNumber }}</p>
+      <p>Email: {{ employee.email }}</p>
+    </ion-label>
+    <ion-buttons slot="end">
+      <ion-button (click)="downloadCv(employee.id)">View CV</ion-button>
+      <ion-button (click)="openForm(employee)" color="primary">Update</ion-button>
+      <ion-button (click)="deleteEmployee(employee.id)" color="danger">Delete</ion-button>
+    </ion-buttons>
+  </ion-item>
+</ion-list>
+
+<ion-footer *ngIf="filteredEmployees.length > itemsPerPage">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="prevPage()" [disabled]="currentPage === 1">Previous</ion-button>
+    </ion-buttons>
+    <ion-title>Page {{ currentPage }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="nextPage()" [disabled]="currentPage * itemsPerPage >= filteredEmployees.length">Next</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
